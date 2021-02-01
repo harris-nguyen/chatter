@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
-// import "./Chat.css";
+import "./Chat.css";
 
 let socket
 
@@ -19,35 +19,36 @@ const Chat = ({ location }) => {
 
     socket = io(ENDPOINT);
 
-    setName(name);
     setRoom(room);
+    setName(name);
 
-    socket.emit("join", { name, room }, () => {
-      console.log("hi");
+    socket.emit("join", { name, room }, (error) => {
+      if (error) {
+        alert(error);
+      }
     });
-
-    return () => {
-      socket.emit('disconnect')
-      socket.off()
-    }
-
-  }, [ENDPOINT, location.search])
+  }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on('message', (message) => {
-      setMessage([...messages, message])
-    })
-  }, [messages])
+    socket.on("message", (message) => {
+      setMessages((messages) => [...messages, message]);
+    });
 
-  const sendMessage = (e) => {
-    e.preventDefault()
+    // socket.on("roomData", ({ users }) => {
+    //   setUsers(users);
+    // });
+  }, []);
 
-    if(message){
-      socket.emit('sendMessage', message, () => setMessage(''))
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
+  };
 
-  }
   console.log(message, messages)
+
   return (
     <div className='outerContainer'>
       <div className='container'>
