@@ -8,7 +8,7 @@ const Join = () => {
   const [room, setRoom] = useState("");
 
   return (
-    <div className="joinOuterContanier">
+    <div className="conatiner">
       <div className="joinInnerContanier">
         <h1 className="heading">JOIN</h1>
         <div>

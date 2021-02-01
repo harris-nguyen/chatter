@@ -1,9 +1,12 @@
 const express = require("express");
 const socketio = require('socket.io')
 const http = require('http')
+const cors = require("cors");
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
