@@ -1,4 +1,4 @@
-# chatter
+# chatter - UNDER CONSTRUCTION
 
 ## Features
 - Basic chat app where you can log in and chat with friends
