@@ -1,9 +1,12 @@
 const express = require("express");
 const socketio = require('socket.io')
 const http = require('http')
+const cors = require("cors");
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -39,6 +42,7 @@ io.on('connection', (socket) => {
      const user = getUser(socket.id);
 
      io.to(user.room).emit("message", { user: user.name, text: message });
+     io.to(user.room).emit("roomData", { room: user.room, users: getUsersInRoom(user.room) });
 
      callback();
    });
