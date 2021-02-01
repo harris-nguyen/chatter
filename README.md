@@ -1,1 +1,3 @@
 # chatter
+
+![chatter](sample.gif)
